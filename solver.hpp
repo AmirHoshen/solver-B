@@ -1,99 +1,102 @@
+
 #include <iostream>
 #include <complex>
-#define EPS .0001
 using namespace std;
-namespace solver {
 
-    bool isZero (double x);
+namespace solver {
     class RealVariable {
     public:
-        double _a = 0;
-        double _b = 1;
-        double _c = 0;
-        RealVariable(){}
-        RealVariable(double a, double b, double c){
-            this->_a = a;
-            this->_b = b;
-            this->_c = c;
-        }
-       
-        const RealVariable& operator==(double x);
+        double _a;
+        double _b;
+        double _c;
+          
 
-        const RealVariable& operator==(RealVariable &x);
+        RealVariable(const double &a = 0, const double &b = 1, const double &c = 0)
+            :_a(a),_b(b),_c(c)
+        {}
+        
+        const RealVariable operator+(const double x) const;
 
-        const RealVariable& operator+(double x);
+        const RealVariable operator+(const RealVariable& x) const;
 
-        const RealVariable& operator+(RealVariable &x);
+        const RealVariable operator-(const double x) const;
 
-        const RealVariable& operator-(double x);
+        const RealVariable operator-(const RealVariable& x) const;
 
-        const RealVariable& operator-(RealVariable &x);
+        const RealVariable operator*(const double x) const;
 
-        const RealVariable& operator*(double x);
+        const RealVariable operator*(const RealVariable& x) const;
 
-        const RealVariable& operator*(RealVariable &x);
+        const RealVariable operator^(const double x) const;
 
-        const RealVariable& operator^(double x);
+        const RealVariable operator^(const RealVariable& x) const;
 
-        const RealVariable& operator/(double x);
+        const RealVariable operator/(const double x) const;
 
-        const RealVariable& operator/(RealVariable &x);
+        const RealVariable operator/(const RealVariable& x) const;
+
+        const RealVariable operator==(const double x) const ;
+        
+        const RealVariable operator==(const RealVariable& x) const;
 
     };
-
-    const RealVariable& operator==(double x, RealVariable &y);
-
-    const RealVariable& operator+(double x, RealVariable &y);
-
-    const RealVariable& operator-(double x, RealVariable &y);
-
-    const RealVariable& operator*(double x, RealVariable &y);
-
-    const RealVariable& operator/(double x, RealVariable &y);
-
 
     class ComplexVariable {
     public:
-        std::complex<double> coff = 1;
-        std::complex<double> power = 1;
-        
-        const ComplexVariable& operator+(std::complex<double> x);
-
-        const ComplexVariable& operator==(std::complex<double> x);
-
-        const ComplexVariable& operator+(ComplexVariable &x);
-        
-        const ComplexVariable& operator==(ComplexVariable &x);
-
-        const ComplexVariable& operator-(std::complex<double> x);
-
-        const ComplexVariable& operator-(ComplexVariable &x);
-
-        const ComplexVariable& operator*(std::complex<double> x);
-
-        const ComplexVariable& operator*(ComplexVariable &x);
-
-        const ComplexVariable& operator^(std::complex<double> x);
-
-        const ComplexVariable& operator^(ComplexVariable &x);
-
-        const ComplexVariable& operator/(std::complex<double> x);
-
-        const ComplexVariable& operator/(ComplexVariable &x);
-    };
+        std::complex<double> _a;
+        std::complex<double> _b;
+        std::complex<double> _c;
     
-    const ComplexVariable& operator==(std::complex<double> x, ComplexVariable &y);
+        ComplexVariable(const std::complex<double>& a = 0, const std::complex<double>& b = 1,
+                        const std::complex<double>& c = 0)
+                : _a(a), _b(b), _c(c)
+        {}
+        
+        const ComplexVariable operator+(const std::complex<double> x)const ;
+        
+        const ComplexVariable operator+(const ComplexVariable& x)const ;
+        
+        const ComplexVariable operator-(const std::complex<double> x)const ;
 
-    const ComplexVariable& operator+(std::complex<double> x, ComplexVariable &y);
+        const ComplexVariable operator-(const ComplexVariable& x)const ;
 
-    const ComplexVariable& operator-(std::complex<double> x, ComplexVariable &y);
+        const ComplexVariable operator*(const std::complex<double> x)const ;
 
-    const ComplexVariable& operator*(std::complex<double> x, ComplexVariable &y);
+        const ComplexVariable operator*(const ComplexVariable& x)const ;
 
-    const ComplexVariable& operator/(std::complex<double> x, ComplexVariable &y);
+        const ComplexVariable operator^(const std::complex<double> x)const ;
 
-    const double solve(RealVariable& x);
+        const ComplexVariable operator/(const std::complex<double> x)const ;
 
-    const ::complex<double> solve(ComplexVariable& x);
+        const ComplexVariable operator/(const ComplexVariable& x)const ;
 
-};
+        const ComplexVariable operator==(const std::complex<double> x)const ;
+
+        const ComplexVariable operator==(const ComplexVariable& x)const ;
+    };
+
+    const RealVariable operator+(const double x, const RealVariable& y);
+
+    const RealVariable operator-(const double x, const RealVariable& y);
+
+    const RealVariable operator*(const double x, const RealVariable& y);
+
+    const RealVariable operator/(const double x, const RealVariable& y);
+
+    const ComplexVariable operator+(const std::complex<double> x, const ComplexVariable& y);
+
+    const ComplexVariable operator-(const std::complex<double> x, const ComplexVariable& y);
+
+    const ComplexVariable operator*(const std::complex<double> x, const ComplexVariable& y);
+
+    const ComplexVariable operator/(const std::complex<double> x, const ComplexVariable& y);
+
+    const RealVariable operator==(const double x, const RealVariable& y);
+
+    const ComplexVariable operator==(const std::complex<double> x, const ComplexVariable& y);
+
+    double solve(const RealVariable& x);
+
+    std::complex<double> solve(const ComplexVariable& x);
+
+}
