@@ -10,10 +10,17 @@ namespace solver {
         double _b;
         double _c;
           
+        RealVariable(){
+            this->_a = 0;
+            this->_b = 1;
+            this->_c = 0;
 
-        RealVariable(const double &a = 0, const double &b = 1, const double &c = 0)
-            :_a(a),_b(b),_c(c)
-        {}
+        }
+        RealVariable(const double a, const double b, const double c){
+            this->_a = a;
+            this->_b = b;
+            this->_c = c;
+        }
         
         const RealVariable operator+(const double x) const;
 
@@ -40,6 +47,8 @@ namespace solver {
         const RealVariable operator==(const RealVariable& x) const;
 
     };
+
+    double solve(const RealVariable& x);
 
     class ComplexVariable {
     public:
@@ -94,8 +103,6 @@ namespace solver {
     const RealVariable operator==(const double x, const RealVariable& y);
 
     const ComplexVariable operator==(const std::complex<double> x, const ComplexVariable& y);
-
-    double solve(const RealVariable& x);
 
     std::complex<double> solve(const ComplexVariable& x);
 

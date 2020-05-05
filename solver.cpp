@@ -5,25 +5,26 @@ using namespace std;
 
 namespace solver {
 
-    const RealVariable operator==(const double x,const  RealVariable& y) {
-        return y == x;
-    }
-
-    const RealVariable operator+(const double x, const RealVariable &y) {
+    
+    const RealVariable operator+(const double x, const RealVariable& y) {
         return y + x;
     }
 
-    const RealVariable operator-(const double x, const RealVariable &y) {
+    const RealVariable operator-(const double x, const RealVariable& y) {
         return x + y * -1;
     }
 
-    const RealVariable operator*(const double x,const RealVariable &y) {
+    const RealVariable operator*(const double x,const RealVariable& y) {
         return y * x;
     }
 
     const RealVariable RealVariable::operator+(const double x) const {
         
         return RealVariable(_a, _b, _c + x);
+    }
+
+    const RealVariable operator==(const double x,const  RealVariable& y) {
+        return y == x;
     }
 
     const RealVariable RealVariable::operator==(const double x) const{
@@ -33,7 +34,7 @@ namespace solver {
         return RealVariable(_a - x._a, _b - x._b, _c - x._c);
     }
 
-    const RealVariable RealVariable::operator+(const RealVariable &x) const {
+    const RealVariable RealVariable::operator+(const RealVariable& x) const {
         return RealVariable(_a + x._a, _b + x._b, _c + x._c);
     }
 
@@ -41,7 +42,7 @@ namespace solver {
         return RealVariable(_a, _b, _c - x);
     }
 
-    const RealVariable RealVariable::operator-(const RealVariable &x) const{
+    const RealVariable RealVariable::operator-(const RealVariable& x) const{
         return RealVariable(_a - x._a, _b - x._b, _c - x._c);
 
     }
@@ -52,7 +53,7 @@ namespace solver {
 
     }
 
-    const RealVariable RealVariable::operator*(const RealVariable &x) const {
+    const RealVariable RealVariable::operator*(const RealVariable& x) const {
         return RealVariable(_a * x._a + _a * x._b + _a * x._c,
                             _b * x._a + _b * x._b + _b * x._c,
                             _c * x._a + _c * x._b + _c * x._c);
@@ -66,13 +67,12 @@ namespace solver {
             double b = this->_b;
             double c = this->_c;
             
-            if(a == 0 && c == 0 && b != 0) return RealVariable(b, 0, 0);
-            
+            if(a == 0 && c == 0 && b == 1) return RealVariable(1, 0, 0);
         }
-        else throw runtime_error("ERR");
+        throw runtime_error("ERR");
     }
 
-    const RealVariable RealVariable::operator/(const RealVariable &x) const{
+    const RealVariable RealVariable::operator/(const RealVariable& x) const{
         if (x._a != 0 && x._b == 0 && x._c == 0){
             return RealVariable(_a / x._a, _b / x._a, _c / x._a);
         }
@@ -87,19 +87,19 @@ namespace solver {
     }
 
 
-    const ComplexVariable operator==(const std::complex<double> x, const ComplexVariable &y) {
+    const ComplexVariable operator==(const std::complex<double> x, const ComplexVariable& y) {
         return y == x;
     }
 
-    const ComplexVariable operator+(const std::complex<double> x, const ComplexVariable &y) {
+    const ComplexVariable operator+(const std::complex<double> x, const ComplexVariable& y) {
         return y + x;
     }
 
-    const ComplexVariable operator-(const std::complex<double> x, const ComplexVariable &y) {
+    const ComplexVariable operator-(const std::complex<double> x, const ComplexVariable& y) {
         return x + y * -1;
     }
 
-    const ComplexVariable operator*(const std::complex<double> x, const ComplexVariable &y) {
+    const ComplexVariable operator*(const std::complex<double> x, const ComplexVariable& y) {
         return y * x;
     }
 
@@ -110,10 +110,10 @@ namespace solver {
         return ComplexVariable(_a, _b, _c - x);
     }
 
-    const ComplexVariable ComplexVariable::operator+(const ComplexVariable &x)const {
+    const ComplexVariable ComplexVariable::operator+(const ComplexVariable& x)const {
         return ComplexVariable(_a + x._a, _b + x._b, _c + x._c);
     }
-    const ComplexVariable ComplexVariable::operator==(const ComplexVariable &x)const {
+    const ComplexVariable ComplexVariable::operator==(const ComplexVariable& x)const {
         return ComplexVariable(_a - x._a, _b - x._b, _c - x._c);
     }
 
@@ -121,7 +121,7 @@ namespace solver {
         return ComplexVariable(_a, _b, _c - x);
     }
 
-    const ComplexVariable ComplexVariable::operator-(const ComplexVariable &x)const {
+    const ComplexVariable ComplexVariable::operator-(const ComplexVariable& x)const {
         return ComplexVariable(_a - x._a, _b - x._b, _c -x._c);
 
     }
@@ -130,7 +130,7 @@ namespace solver {
         return ComplexVariable(_a * x, _b * x, _c * x);
     }
 
-    const ComplexVariable ComplexVariable::operator*(const ComplexVariable &x)const {
+    const ComplexVariable ComplexVariable::operator*(const ComplexVariable& x)const {
         return ComplexVariable(_a * x._a + _a * x._b + _a * x._c,
                             _b * x._a + _b * x._b + _b * x._c,
                             _c * x._a + _c * x._b + _c * x._c);
@@ -159,7 +159,7 @@ namespace solver {
 
     }
 
-    const ComplexVariable ComplexVariable::operator/(const ComplexVariable &x)const {
+    const ComplexVariable ComplexVariable::operator/(const ComplexVariable& x)const {
         if (x._a != 0.0 && x._b == 0.0 && x._c == 0.0){
             return ComplexVariable(_a / x._a, _b / x._a, _c / x._a);
         }
@@ -197,16 +197,14 @@ namespace solver {
             ans = -(c / b);
             return ans;
         }
-        else if (c == 0.0 && b != 0.0 && a == 0.0)
-            return 0.0;
+        else if (c == 0.0 && b != 0.0 && a == 0.0) return 0.0;
         else if (c != 0.0 && a != 0.0)
         {
             complex<double> root = sqrt(b * b - 4.0 * a * c);
             ans = (-b + root) / (2.0 * a);
             return ans;
         }
-        else
-            throw runtime_error("ERR");
+        else throw runtime_error("ERR");
     }
     
 
